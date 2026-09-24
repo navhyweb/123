@@ -23,7 +23,7 @@ Scripts para dar de alta en GAM, via el procedimiento GeneXus `Alta_Usuarios_GAM
   | Name | &FirstName |
   | Surname | &LastName |
   | PASSWORD | &password |
-  | (fijo) | &rolID = 1 (Despachante en GAM) |
+  | (fijo) | &rolID = 11 (Despachante en GAM) |
 
   Son 16 usuarios, sin emails ni usernames duplicados.
 
@@ -61,10 +61,13 @@ guarda en `alta_usuarios_despachante.log`.
   procedimiento esta expuesto con otro ruteo (por ejemplo REST/segmentos
   `/Value1/Value2/...`), hay que ajustar la construccion de `$url` en el script.
 - **Password compartida**: las 16 filas del Excel tienen la misma password
-  (`K7m%P4xL`). Si el procedimiento no fuerza cambio de password en el primer
-  login, conviene evaluar generar una password distinta por usuario.
-- **rolID**: se uso `1` para Despachante en GAM, segun lo confirmado. (En un
-  mensaje anterior se habia mencionado 11; si hay dudas, confirmar el ID real
-  en la tabla de roles de GAM antes de correr el alta masiva.)
+  (`K7m%P4xL`), pero el procedimiento setea `&User.MustChangePassword = true`,
+  asi que GAM va a forzar el cambio en el primer login de cada usuario. No
+  hace falta generar una password distinta por fila.
+- **rolID**: se uso `11` para Despachante en GAM, confirmado por el usuario.
 - Probar primero con `-WhatIf` y, si es posible, contra el ambiente de
   desarrollo antes de correr contra un ambiente productivo.
+- **No se pudo probar la llamada HTTP real** desde este entorno: la politica
+  de red de esta sesion no permite salir hacia `desa02.rendelit.ar` (host no
+  incluido en el allowlist). El script no fue ejecutado contra el servidor;
+  hay que correrlo desde una maquina con acceso real al ambiente.
