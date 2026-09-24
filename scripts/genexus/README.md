@@ -40,15 +40,19 @@ Scripts para dar de alta en GAM, via el procedimiento GeneXus `Alta_Usuarios_GAM
 
 ## Uso
 
+El script apunta por defecto a `http://localhost/RendelMoveDFWeb17_VDesarrollo.NetEnvironment`,
+asi que hay que ejecutarlo **en la misma maquina donde esta publicada la app**
+(el IIS que sirve `login.aspx`), para que `localhost` resuelva ahi.
+
 ```powershell
 # 1) Ver las URLs que se generarian, sin ejecutar nada
 .\Alta_Usuarios_GAM_Despachante.ps1 -WhatIf
 
-# 2) Ejecutar contra desa02
-.\Alta_Usuarios_GAM_Despachante.ps1 -BaseUrl "https://desa02.rendelit.ar/RendelMoveDFWeb17_VDesarrollo.NetEnvironment"
+# 2) Ejecucion real
+.\Alta_Usuarios_GAM_Despachante.ps1
 
-# 3) Ejecutar contra un ambiente local
-.\Alta_Usuarios_GAM_Despachante.ps1 -BaseUrl "http://localhost/RendelMoveDFWeb17_VDesarrollo.NetEnvironment"
+# 3) Si hace falta apuntar a otra URL base
+.\Alta_Usuarios_GAM_Despachante.ps1 -BaseUrl "http://otro-host/RendelMoveDFWeb17_VDesarrollo.NetEnvironment"
 ```
 
 El resultado de cada llamada (OK/FAIL + status HTTP) se muestra en pantalla y se
@@ -65,9 +69,9 @@ guarda en `alta_usuarios_despachante.log`.
   asi que GAM va a forzar el cambio en el primer login de cada usuario. No
   hace falta generar una password distinta por fila.
 - **rolID**: se uso `11` para Despachante en GAM, confirmado por el usuario.
-- Probar primero con `-WhatIf` y, si es posible, contra el ambiente de
-  desarrollo antes de correr contra un ambiente productivo.
-- **No se pudo probar la llamada HTTP real** desde este entorno: la politica
-  de red de esta sesion no permite salir hacia `desa02.rendelit.ar` (host no
-  incluido en el allowlist). El script no fue ejecutado contra el servidor;
-  hay que correrlo desde una maquina con acceso real al ambiente.
+- Probar primero con `-WhatIf` antes de correr el alta real.
+- **No se pudo probar la llamada HTTP real** desde este entorno: es un sandbox
+  en la nube sin la app de GeneXus corriendo, y `localhost` ahi no apunta a
+  ningun servidor. El script tiene que correrse en la maquina donde esta
+  publicado `RendelMoveDFWeb17_VDesarrollo.NetEnvironment` (o contra un host
+  con acceso real, via `-BaseUrl`).

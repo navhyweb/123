@@ -26,16 +26,17 @@
     Si se pasa, solo imprime las URLs que se invocarian, sin llamarlas.
 
 .EXAMPLE
-    # Prueba en desa02 sin ejecutar nada (solo mostrar URLs)
+    # Prueba sin ejecutar nada (solo mostrar URLs)
     .\Alta_Usuarios_GAM_Despachante.ps1 -WhatIf
 
 .EXAMPLE
-    # Ejecucion real contra desa02
-    .\Alta_Usuarios_GAM_Despachante.ps1 -BaseUrl "https://desa02.rendelit.ar/RendelMoveDFWeb17_VDesarrollo.NetEnvironment"
+    # Ejecucion real (correr en la maquina donde vive la app, para que
+    # "localhost" resuelva al IIS que la hostea)
+    .\Alta_Usuarios_GAM_Despachante.ps1
 #>
 
 param(
-    [string]$BaseUrl = "https://desa02.rendelit.ar/RendelMoveDFWeb17_VDesarrollo.NetEnvironment",
+    [string]$BaseUrl = "http://localhost/RendelMoveDFWeb17_VDesarrollo.NetEnvironment",
     [string]$ProcedureName = "Alta_Usuarios_GAM_Excel",
     [string]$CsvPath = (Join-Path $PSScriptRoot "usuarios_despachante.csv"),
     [string]$LogPath = (Join-Path $PSScriptRoot "alta_usuarios_despachante.log"),
